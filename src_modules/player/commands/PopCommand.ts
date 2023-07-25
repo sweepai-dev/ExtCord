@@ -3,6 +3,8 @@ import PlayerModule from "..";
 import { musicPopPhrase, musicEmptyQueuePhrase, musicNoVoicePhrase, musicNotPlayingPhrase, musicWrongVoicePhrase } from "../phrases";
 import { getVoiceConnection, VoiceConnectionStatus } from "@discordjs/voice";
 
+...
+
 export class PopCommand extends Command<[]> {
     private player: PlayerModule;
 
