@@ -1,4 +1,4 @@
-import { Command, IExecutionContext } from "../../..";
+import { Command, IExecutionContext, getVoiceConnection, VoiceConnectionStatus, musicNoVoicePhrase, musicWrongVoicePhrase } from "../../..";
 import PlayerModule from "..";
 import { musicPopPhrase, musicEmptyQueuePhrase } from "../phrases";
 
@@ -20,7 +20,18 @@ export class PopCommand extends Command<[]> {
     }
 
     public async execute(context: IExecutionContext<[]>) {
+        const voiceChannel = context.member.member.voice.channel;
+        if (!voiceChannel) {
+            return context.respond(musicNoVoicePhrase, {});
+        }
         const guild = context.guild.guild;
+        const connection = getVoiceConnection(guild.id);
+        if (connection?.state.status !== VoiceConnectionStatus.Ready || !connection.state.subscription) {
+            return context.respond(musicNotPlayingPhrase, {});
+        }
+        if (!voiceChannel.members.get(context.bot.client!.user!.id)) {
+            return context.respond(musicWrongVoicePhrase, {});
+        }
         const result = this.player.popQueue(guild);
 
         if (result) {
