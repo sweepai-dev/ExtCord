@@ -1,7 +1,7 @@
 import { Command, IExecutionContext } from "../../..";
 import PlayerModule from "..";
 import { musicPopPhrase, musicEmptyQueuePhrase, musicNoVoicePhrase, musicNotPlayingPhrase, musicWrongVoicePhrase } from "../phrases";
-import { VoiceConnectionStatus, getVoiceConnection } from "discord.js";
+import { VoiceConnectionStatus, getVoiceConnection } from "@discordjs/voice";
 
 export class PopCommand extends Command<[]> {
     private player: PlayerModule;
